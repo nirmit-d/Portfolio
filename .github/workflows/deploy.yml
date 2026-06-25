@@ -15,31 +15,13 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build
-        run: pnpm vite build --config vite.config.github.ts
-        env:
-          VITE_API_URL: ${{ secrets.VITE_API_URL }}
-          VITE_BASE_PATH: /Portfolio/
 
       - uses: actions/configure-pages@v5
 
